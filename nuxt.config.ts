@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
-  app: {
-    baseURL: '/nvrcd-web-lms/',
-    },
+  // ssr: false,
+  // app: {
+  //   baseURL: '/nvrcd-web-lms/',
+  //   },
      modules: ["nuxt-microcms-module", "@nuxt/ui"],
      microCMS: {
        serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
