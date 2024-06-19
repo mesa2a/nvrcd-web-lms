@@ -3,7 +3,7 @@
         <header>
             <AppHeader />
         </header>
-        <main>
+        <main class="container mx-auto">
             <slot />    
         </main>
         <footer class="absolute bottom-0">

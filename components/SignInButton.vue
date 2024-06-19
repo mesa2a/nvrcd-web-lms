@@ -8,6 +8,6 @@ import { useAuth } from '../composables/auth';
 
 const signIn = async (): Promise<void> => {
     await useAuth().signIn();
-    await navigateTo('/')
+    await navigateTo('/lessons/')
 }
 </script>

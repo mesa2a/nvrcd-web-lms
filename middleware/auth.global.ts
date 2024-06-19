@@ -1,34 +1,27 @@
-import type { RouteLocationNormalized } from "vue-router";
-import { useUser } from "~/composables/user";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useUser } from "../composables/user";
 
-const publicRoutes = ["/", "/about", "/contact"]; // 公開ページのパスを指定
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const auth = getAuth();
 
-export default defineNuxtRouteMiddleware(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    const { setUser } = useUser();
-    const auth = getAuth();
-
-    // ユーザーのログイン状態が確定するまで待機
-    await new Promise((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-            unsubscribe();
-            resolve(firebaseUser);
-        });
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // ユーザーがログインしている場合
+        if (to.path === "/") {
+          // トップページにアクセスしようとした場合は、記事一覧ページにリダイレクト
+          return resolve(navigateTo("/lessons/"));
+        }
+      } else {
+        // ユーザーがログインしていない場合
+        if (to.path !== "/" && to.path !== "/login") {
+          // トップページとログインページ以外にアクセスしようとした場合は、ログインページにリダイレクト
+          return resolve(navigateTo("/"));
+        }
+      }
+      
+      // 上記以外の場合は、そのまま次のミドルウェアやページに進む
+      return resolve();
     });
-
-    const firebaseUser = auth.currentUser;
-
-    if (firebaseUser) {
-        setUser(firebaseUser);
-
-        // 公開ページにアクセスしようとした場合は /lessons/ にリダイレクト
-        if (publicRoutes.includes(to.path)) {
-            // return await navigateTo("/lessons/");
-        }
-    } else {
-        // 非公開ページにアクセスしようとした場合はトップページにリダイレクト
-        if (!publicRoutes.includes(to.path)) {
-            return await navigateTo("/");
-        }
-    }
+  });
 });
