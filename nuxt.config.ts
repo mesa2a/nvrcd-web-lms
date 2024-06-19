@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   // app: {
   //   baseURL: '/nvrcd-web-lms/',
   //   },
+  plugins: ['~/plugins/prism.js'],
      modules: ["@nuxt/ui"],
     runtimeConfig: {
       public: {
