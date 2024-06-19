@@ -2,7 +2,7 @@
   <div class="lesson-page">
     <h1 class="lesson-title">{{ lesson?.name }}</h1>
     <p class="lesson-description">{{ lesson?.description }}</p>
-    <div class="lesson-content" v-html="lesson?.content"></div>
+    <div class="lesson-content pb-20" v-html="lesson?.content"></div>
   </div>
 </template>
   
