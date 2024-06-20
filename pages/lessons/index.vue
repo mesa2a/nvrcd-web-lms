@@ -16,7 +16,7 @@
 
             <ul v-show="openAccordion[unitName]" class="accordion-content mt-4 space-y-2">
                 <li v-for="content in unit" :key="content.id" class="text-lg">
-                    <nuxt-link :to="`${content.id}`" class="text-blue-500 hover:text-blue-700">{{ content.name }}</nuxt-link>
+                    <nuxt-link :to="`/lessons/${content.id}`" class="text-blue-500 hover:text-blue-700">{{ content.name }}</nuxt-link>
                 </li>
             </ul>
         </div>
